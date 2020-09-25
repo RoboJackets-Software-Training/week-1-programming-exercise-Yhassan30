@@ -37,10 +37,45 @@ int main() {
 
   // TODO write your code here
   // =========== START =========
+  
+  std::cout << "x: {" << x[0];
+  for(int i = 1; i < x.size(); i++) {
+    std::cout << ", " << x[i];
+  }
+  std::cout << "}" << std::endl;
 
-
-
-
+  std::cout << "w: {" << w[0];
+  for(int i = 1; i < w.size(); i++) {
+    std::cout << ", " << w[i];
+  }
+  std::cout << "}" << std::endl;
+  
+  double value_to_be_added = 0;
+  
+  
+  for(int i = 0; i < x.size(); i++) {
+    double value_to_be_added = 0;
+    for(int j = 0; j < w.size(); j++) {
+      if(i - (w.size()-1/2) + j >= 0 && i - w.size()-1/2 + j < x.size()) {
+        value_to_be_added += x[i - w.size()-1/2 + j]*w[j];
+      } else if(!pack_with_zeros && i - w.size()-1/2 + j < 0) {
+        // Handles the case where where we underflow indexes
+        value_to_be_added += x[0] * w[j];
+      } else if(!pack_with_zeros && i - w.size()-1/2 + j >= x.size()) {
+        // Handles the case where we overflow indexes
+        value_to_be_added += x[x.size()-1] * w[j];
+      }
+    }
+    y.push_back(value_to_be_added);
+  }
+  
+  
+  
+  std::cout << "{" << y[0];
+  for(int i = 1; i < y.size(); i++) {
+    std::cout << ", " << y[i];
+  }
+  std::cout << "}" << std::endl;
   // =========== END ===========
 
   return 0;
